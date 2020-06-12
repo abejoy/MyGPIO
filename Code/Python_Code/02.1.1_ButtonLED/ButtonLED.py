@@ -18,13 +18,12 @@ def setup():
 
 def loop():
     while True:
-        print(GPIO.input(buttonPin))
         if GPIO.input(buttonPin)==GPIO.LOW: # if button is pressed
             GPIO.output(ledPin,GPIO.HIGH)   # turn on led
-            # print ('led turned on >>>')     # print information on terminal
+            print ('led turned on >>>')     # print information on terminal
         else : # if button is relessed
             GPIO.output(ledPin,GPIO.LOW) # turn off led 
-            # print ('led turned off <<<')
+            print ('led turned off <<<')
 
 def destroy():
     GPIO.output(ledPin, GPIO.LOW)     # turn off led 
