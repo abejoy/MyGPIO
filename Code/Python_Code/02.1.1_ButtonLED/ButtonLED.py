@@ -14,7 +14,7 @@ def setup():
     
     GPIO.setmode(GPIO.BOARD)      # use PHYSICAL GPIO Numbering
     GPIO.setup(ledPin, GPIO.OUT)   # set ledPin to OUTPUT mode
-    GPIO.setup(buttonPin, GPIO.IN)    # set buttonPin to PULL UP INPUT mode
+    GPIO.setup(buttonPin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)    # set buttonPin to PULL UP INPUT mode
 
 def loop():
     while True:
