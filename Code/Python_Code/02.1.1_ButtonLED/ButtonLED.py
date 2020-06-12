@@ -14,10 +14,11 @@ def setup():
     
     GPIO.setmode(GPIO.BOARD)      # use PHYSICAL GPIO Numbering
     GPIO.setup(ledPin, GPIO.OUT)   # set ledPin to OUTPUT mode
-    GPIO.setup(buttonPin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)    # set buttonPin to PULL UP INPUT mode
+    GPIO.setup(buttonPin, GPIO.IN, pull_up_down=GPIO.PUD_UP)    # set buttonPin to PULL UP INPUT mode
 
 def loop():
     while True:
+        print(GPIO.input(buttonPin))
         if GPIO.input(buttonPin)==GPIO.LOW: # if button is pressed
             GPIO.output(ledPin,GPIO.HIGH)   # turn on led
             print ('led turned on >>>')     # print information on terminal
