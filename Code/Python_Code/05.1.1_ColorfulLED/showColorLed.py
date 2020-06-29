@@ -8,11 +8,12 @@
 import RPi.GPIO as GPIO
 import time
 import random
+from matplotlib import colors
 
 pins = [11, 12, 13]         # define the pins for R:11,G:12,B:13 
 
 def setup():
-    global pwmRed,pwmGreen,pwmBlue  
+    global pwmRed,pwmGreen,pwmBlue
     GPIO.setmode(GPIO.BOARD)       # use PHYSICAL GPIO Numbering
     GPIO.setup(pins, GPIO.OUT)     # set RGBLED pins to OUTPUT mode
     GPIO.output(pins, GPIO.HIGH)   # make RGBLED pins output HIGH level
@@ -26,33 +27,50 @@ def setup():
 def setColor(rgb_array=[], r_val=0, g_val=0, b_val=0): # change duty cycle for three pins to r_val,g_val,b_val
     if len(rgb_array) != 3:
         pwmRed.ChangeDutyCycle(r_val)     # change pwmRed duty cycle to r_val
-        pwmGreen.ChangeDutyCycle(g_val)   
+        pwmGreen.ChangeDutyCycle(g_val)
         pwmBlue.ChangeDutyCycle(b_val)
     else:
         pwmRed.ChangeDutyCycle(rgb_array[0])     # change pwmRed duty cycle to r_val
-        pwmGreen.ChangeDutyCycle(rgb_array[1])   
+        pwmGreen.ChangeDutyCycle(rgb_array[1])
         pwmBlue.ChangeDutyCycle(rgb_array[2])
-    
+
+
+def invert_rgb(r, g, b):
+    return [100-r, 100-g, 100-b]
+
+
 
 def loop():
     while True :
-        r= random.randint(0, 100)  #get a random in (0,100)
-        g=random.randint(0, 100)
-        b=random.randint(0, 100)
-        setColor([0,100,100])          #set random as a duty cycle value 
-        print ('r=%d, g=%d, b=%d ' %(r ,g, b))
-        time.sleep(1)
-        
+        color_val = input('Enter Color: ')
+
+        color_info = colors.to_rgba(color_val)
+        red_col = int(round(color_info[0]*100))
+        green_col = int(round(color_info[1]*100))
+        blue_col = int(round(color_info[2]*100))
+
+        setColor(invert_rgb(red_col, green_col, blue_col))          #set random as a duty cycle value 
+        print ('r=%d, g=%d, b=%d ' %(red_col, green_col, blue_col))
+
+
 def destroy():
     pwmRed.stop()
     pwmGreen.stop()
     pwmBlue.stop()
     GPIO.cleanup()
-    
-if __name__ == '__main__':     # Program entrance
-    print ('Program is starting ... ')
-    setup()
-    try:
-        loop()
-    except KeyboardInterrupt:  # Press ctrl-c to end the program.
-        destroy()
+
+def mainstuff():
+    if __name__ == '__main__':     # Program entrance
+        print('Program is starting ... ')
+        setup()
+        try:
+            loop()
+        except ValueError:  # if unknown color inpout
+            print('Unknown Color, Try again')
+            print()
+            destroy()
+            mainstuff()
+        except KeyboardInterrupt:
+            destroy()
+
+mainstuff()

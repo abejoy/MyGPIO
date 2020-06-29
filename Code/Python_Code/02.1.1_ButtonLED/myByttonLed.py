@@ -10,11 +10,12 @@ def setup():
     GPIO.setup(buttonPin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
 def blink(x:int):
+    print("blinking")
     for i in range(x):
         GPIO.output(ledPin, GPIO.HIGH)
-        time.sleep(1)
+        time.sleep(0.5)
         GPIO.output(ledPin, GPIO.LOW)
-        time.sleep(1)
+        time.sleep(0.5)
 
 def loop():
     while True:
