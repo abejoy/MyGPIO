@@ -1,0 +1,32 @@
+import Rpi.GPIO as GPIO
+import time
+import random
+
+pins = [11,12,13]
+
+def setup():
+    global pwnRed, pwmGreen, pwmBlue
+    GPIO.setmode(GPIO.BOARD)
+    GPIO.setup(pins, GPIO.OUT)
+    GPIO.output(pins, GPIO.HIGH)
+    pwmRed = GPIO.PWM(pins[0], 2000)
+    pwmGreen = GPIO.PWM(pins[1], 2000)
+    pwmBlue = GPIO.PWM(pins[2], 2000)
+    pwmRed.start(0)
+    pwmGreen.start(0)
+    pwmBlue.start(0)
+
+
+def setColor(rgb_array=[], r_val=0, g_val=0, b_val=0):
+    if len(rgb_array) != 3:
+        pwmRed.ChangeDutyCycle(r_val)
+        pwmGreen.ChangeDutyCycle(g_val)
+        pwmBlue.ChangeDutyCycle(b_val)
+    else:
+            pwmRed = GPIO.PWM(pins[0], 2000)
+pwmRed.ChangeDutyCycle(rgb_array[0])
+        pwmRed = GPIO.PWM(pins[0], 2000)
+
+
+
+

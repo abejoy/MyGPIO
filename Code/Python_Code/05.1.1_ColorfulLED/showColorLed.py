@@ -10,6 +10,10 @@ import time
 import random
 from matplotlib import colors
 
+
+
+
+
 pins = [11, 12, 13]         # define the pins for R:11,G:12,B:13 
 
 def setup():
@@ -34,7 +38,9 @@ def setColor(rgb_array=[], r_val=0, g_val=0, b_val=0): # change duty cycle for t
         pwmGreen.ChangeDutyCycle(rgb_array[1])
         pwmBlue.ChangeDutyCycle(rgb_array[2])
 
-
+def set_col_name(name):
+    col_name = name
+    
 def invert_rgb(r, g, b):
     return [100-r, 100-g, 100-b]
 
@@ -42,7 +48,7 @@ def invert_rgb(r, g, b):
 
 def loop():
     while True :
-        color_val = input('Enter Color: ')
+        color_val = input("enter color: ")
 
         color_info = colors.to_rgba(color_val)
         red_col = int(round(color_info[0]*100))
@@ -73,4 +79,6 @@ def mainstuff():
         except KeyboardInterrupt:
             destroy()
 
+
 mainstuff()
+
